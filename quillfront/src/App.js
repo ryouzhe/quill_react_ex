@@ -1,20 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom'; 
+import { Helmet } from 'react-helmet-async';
+import TestPage from './pages/TestPage';
+import PostListPage from './pages/PostListPage';
+import WritePage from './pages/WritePage';
 
-function App() {
-   const [hello, setHello] = useState('')
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/test')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-    }, []);
-
+const App = () => {
     return (
-        <div>
-            백엔드에서 가져온 데이터입니다 : {hello}
-        </div>
-    );
-}
+        <>
+            <Helmet>
+                <title>Quill Editor</title>
+            </Helmet>
+            <Routes>
+                <Route path="/" element={<TestPage />}/>
+                <Route path="/list" element={<PostListPage />}/>
+                <Route path="/write" element={<WritePage />}/>
+            </Routes>
+        </>
+    )
+};
 
 export default App;
