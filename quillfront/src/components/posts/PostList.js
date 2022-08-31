@@ -7,12 +7,15 @@ const PostListBlock = styled.div``;
 const PostItemBlock = styled.div``;
 
 const PostItem = ({ post }) => {
-    const { publishedDate, title, body, _id } = post;
+    const { createdDate, lastModifiedDate, title, body, id } = post;
 
     return (
         <PostItemBlock>
-            <Link to={`/${_id}`}>{title}</Link>
-            <SubInfo publishedDate={new Date(publishedDate)} />
+            <Link to={`/${id}`}>{title}</Link>
+            {lastModifiedDate === null ? 
+                <SubInfo publishedDate={new Date(createdDate)} />
+            :   <SubInfo publishedDate={new Date(lastModifiedDate)} />
+            }
             <p>{body}</p>
         </PostItemBlock>
     );
@@ -28,7 +31,7 @@ const PostList = ({ posts, loading, error }) => {
             {!loading && posts && (
                 <div>
                     {posts.map((post) => (
-                        <PostItem post={post} key={post._id} />
+                        <PostItem post={post} key={post.id} />
                     ))}
                 </div>
             )}
