@@ -19,7 +19,7 @@ const Header = () => {
         <>
             <HeaderBlock>
                 <HeaderText><Link to="/" className='logo'>Home</Link></HeaderText>
-                <HeaderText><Link to="/write" className='logo'>Post</Link></HeaderText>
+                <HeaderText><Link to="/write" className='logo'>Write</Link></HeaderText>
             </HeaderBlock>
         </>
     );
