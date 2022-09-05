@@ -33,10 +33,6 @@ public class IndexController {
     // Post save
     @PostMapping("/posts")
     public String write(String title, String body) {
-        System.out.println("=======================");
-        System.out.println(title);
-        System.out.println(body);
-        System.out.println("=======================");
         PostDto postDto = PostDto.builder()
                 .title(title)
                 .body(body)

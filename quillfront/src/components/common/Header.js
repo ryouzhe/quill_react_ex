@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
-    position: fixed;
     width: 100%;
     height: 5vh;
     display: flex;
