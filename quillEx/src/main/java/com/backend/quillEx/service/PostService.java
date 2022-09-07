@@ -26,9 +26,16 @@ public class PostService {
                     .id(post.getId())
                     .title(post.getTitle())
                     .body(post.getBody())
+                    .createdDate((post.getCreatedDate()))
+                    .lastModifiedDate((post.getLastModifiedDate()))
                     .build());
         }
         return postList;
+    }
+
+    public Post findPost(Long id) {
+        Post findPost = postRepository.findById(id).get();
+        return findPost;
     }
 
     @Transactional
@@ -39,5 +46,10 @@ public class PostService {
                 .build();
         postRepository.save(post);
         return post;
+    }
+
+    @Transactional
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
     }
 }
