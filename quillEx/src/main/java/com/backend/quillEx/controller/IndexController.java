@@ -39,6 +39,18 @@ public class IndexController {
         return "writePost";
     }
 
+    // Post update
+    @PostMapping("/update/{id}")
+    public String PostUpdate(String title, String body, @PathVariable Long id) {
+        PostDto postDto = PostDto.builder()
+                .title(title)
+                .body(body)
+                .build();
+
+        postService.updatePost(postDto, id);
+        return "updatePost";
+    }
+
     // Post view
     @GetMapping ("/view/{id}")
     public PostDto PostView(@PathVariable Long id) {

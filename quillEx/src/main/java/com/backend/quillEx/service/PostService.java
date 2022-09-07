@@ -49,7 +49,17 @@ public class PostService {
     }
 
     @Transactional
+    public Post updatePost(PostDto postDto, Long id) {
+        Post post = postRepository.findById(id).get();
+        post.setTitle(postDto.getTitle());
+        post.setBody(postDto.getBody());
+        postRepository.save(post);
+        return post;
+    }
+
+    @Transactional
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
+
 }

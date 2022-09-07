@@ -22,4 +22,12 @@ public class Post extends BaseEntity{
 
     @Column(length = 10000)
     private String body;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 }

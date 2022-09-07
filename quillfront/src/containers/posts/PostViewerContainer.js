@@ -30,7 +30,7 @@ const PostViewerContainer = () => {
     }
     const onRemove = async () => {
         try {
-            await removePost(postId);
+            await removePost({ postId });
             navigate('/');
         } catch (e) {
             console.log(e);
