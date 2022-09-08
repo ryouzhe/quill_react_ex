@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../../modules/posts';
 import PostList from '../../components/posts/PostList';
+import Responsive from '../../components/common/Responsive';
 
 const PostListContainer = () => {
     const dispatch = useDispatch();
@@ -18,11 +19,13 @@ const PostListContainer = () => {
     }, [dispatch]);
 
     return (
-        <PostList
-            loading={loading}
-            error={error}
-            posts={posts}
-        />
+        <Responsive>
+            <PostList
+                loading={loading}
+                error={error}
+                posts={posts}
+            />
+        </Responsive>
     );
 };
 

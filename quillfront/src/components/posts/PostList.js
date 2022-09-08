@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const PostListBlock = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 15px 0px;
+    padding: 15px 40px;
 `;
 
 const PostItemBlock = styled.div`
@@ -36,6 +36,9 @@ const PostItem = ({ post }) => {
 const PostList = ({ posts, loading, error }) => {
     if (error) {
         return <PostListBlock>Error !!</PostListBlock>
+    }
+    if (posts === null) {
+        return <PostListBlock>Posts Array Empty!!</PostListBlock>
     }
 
     return (

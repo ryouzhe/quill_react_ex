@@ -5,3 +5,5 @@ export const updatePost = ({ id, title, body }) => client.post(`http://localhost
 export const listPosts = () => client.get('http://localhost:8080/api/list');
 export const readPost = ({ postId }) => client.get(`http://localhost:8080/api/view/${postId}`);
 export const removePost = ({ postId }) => client.get(`http://localhost:8080/api/delete/${postId}`);
+
+export const saveimg = ({ formData }) => client.post('http//localhost:8080/api/imgupload', formData, { headers: {'content-type': 'multipart/form-data'}} );

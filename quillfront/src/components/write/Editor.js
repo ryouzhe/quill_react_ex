@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Responsive from '../common/Responsive';
 import styled from 'styled-components';
 import Quill from 'quill';
@@ -31,28 +31,42 @@ const QuillWrapper = styled.div`
     }
 `;
 
+const ImgInput = styled.input`
+    display: none;
+`;
+
 const Editor = ({ title, body, onChangeField }) => {
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
+    const imgInputRef = useRef();
+    const [files, setFiles] = useState('');
+    const [imgBit, setImgBit] = useState('');
 
     useEffect(() => {
         quillInstance.current = new Quill(quillElement.current, {
             theme: 'snow',
             placeholder: 'Input Text...',
             modules: {
-                toolbar: [
+                toolbar:{ 
+                    container: [
                     [{ header: '1' }, { header: '2' }],
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ list: 'orderd' }, { list: 'bullet' }],
                     ['blockquote', 'code-block', 'link', 'image'],
-                ],
-            },
-        });
+                    ],
+               },
+        }});
         const quill = quillInstance.current;
+        // Editor Text Event
         quill.on('text-change', (delta, oldDelta, source) => {
             if(source === 'user') {
                 onChangeField({ key: 'body', value: quill.root.innerHTML });
             }
+        });
+        // Editor Image Event
+        quill.getModule('toolbar').addHandler('image', () => {
+            console.log("image add event handler");
+            imgEventHandler();       
         });
     }, [onChangeField]);
 
@@ -67,6 +81,24 @@ const Editor = ({ title, body, onChangeField }) => {
         onChangeField({ key: 'title', value: e.target.value });
     };
 
+    const imgEventHandler = () => {
+        imgInputRef.current.click();
+    }
+
+    const uploadFile = () => {
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        dispatch(saveimg({ formData }));
+    }
+
+    const onLoadFile = e => {
+        const file = e.target.files;
+        const range = quillElement.current.getSelection();
+        setFiles(file);
+        setImgBit(URL.createObjectURL(e.target.files[0]));
+        quillElement.current.insertEmbed(range.index, 'image', "/display?filePath=" + imgBit);
+    }
+
     return (
         <EditorBlock>
             <TitleInput 
@@ -77,6 +109,12 @@ const Editor = ({ title, body, onChangeField }) => {
             <QuillWrapper>
                 <div ref={quillElement} />
             </QuillWrapper>
+            <ImgInput
+                type="file"
+                accept="image/*"
+                ref={imgInputRef}
+                onChange={onLoadFile}
+            />
         </EditorBlock>
     );
 };
