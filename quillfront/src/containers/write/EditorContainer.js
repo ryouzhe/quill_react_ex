@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initialize } from '../../modules/write';
 import Editor from '../../components/write/Editor';
+import { saveimg } from '../../modules/image';
 
 const EditorContainer = () => {
     const dispatch = useDispatch();
@@ -10,6 +11,11 @@ const EditorContainer = () => {
         body: write.body,
     }));
     const onChangeField = useCallback(payload => dispatch(changeField(payload)),[dispatch,]);
+    const uploadFile = (files) => {
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        dispatch(saveimg({ formData }));
+    };
 
     useEffect(() => {
         return () => {
@@ -17,7 +23,7 @@ const EditorContainer = () => {
         };
     }, [dispatch]);
 
-    return <Editor onChangeField={onChangeField} title={title} body={body} />;
+    return <Editor onChangeField={onChangeField} uploadFile={uploadFile} title={title} body={body} />;
 };
 
 export default EditorContainer;

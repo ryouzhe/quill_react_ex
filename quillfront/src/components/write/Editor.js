@@ -35,7 +35,7 @@ const ImgInput = styled.input`
     display: none;
 `;
 
-const Editor = ({ title, body, onChangeField }) => {
+const Editor = ({ title, body, onChangeField, uploadFile }) => {
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
     const imgInputRef = useRef();
@@ -85,18 +85,14 @@ const Editor = ({ title, body, onChangeField }) => {
         imgInputRef.current.click();
     }
 
-    const uploadFile = () => {
-        const formData = new FormData();
-        formData.append('file', files[0]);
-        dispatch(saveimg({ formData }));
-    }
-
     const onLoadFile = e => {
         const file = e.target.files;
         const range = quillElement.current.getSelection();
         setFiles(file);
         setImgBit(URL.createObjectURL(e.target.files[0]));
         quillElement.current.insertEmbed(range.index, 'image', "/display?filePath=" + imgBit);
+
+        uploadFile(e.target.files);
     }
 
     return (

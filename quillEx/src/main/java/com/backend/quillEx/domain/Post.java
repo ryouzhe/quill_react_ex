@@ -1,14 +1,13 @@
 package com.backend.quillEx.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +22,6 @@ public class Post extends BaseEntity{
     @Column(length = 10000)
     private String body;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Image> images = new ArrayList<Image>();
 }
